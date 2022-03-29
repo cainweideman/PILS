@@ -1,5 +1,5 @@
 # Authors: Thijs Brekhof, Cain Weideman, Twan Heeres
-# The main python file we will use to classift musical genres
+# The main python file we will use to classify musical genres
 import eyed3
 import os
 import pickle
