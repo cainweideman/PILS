@@ -1,6 +1,5 @@
 import os
 import pickle
-from pydub import AudioSegment
 
 
 def main():
@@ -18,14 +17,7 @@ def main():
             for i in file_list:
                 if i in genre_dict.keys():
                     file_path = new_path + '/' + i
-                    dst = "data/{0}".format(i[:-4])
-                    #print(file_path)
-                    #print(dst)
-                    audSeg = AudioSegment.from_mp3(file_path)
-                    audSeg.export(dst, format="wav")
-
-    with open('genre_dict.pickle', 'wb') as f:
-        pickle.dump(genre_dict, f)
+                    os.replace(file_path, "mp3-data/" + i)
 
 
 if __name__ == "__main__":
