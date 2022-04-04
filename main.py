@@ -3,7 +3,12 @@ import pickle
 from sklearn.model_selection import train_test_split
 import collections
 from sklearn import preprocessing
+from sklearn.metrics import accuracy_score
+from sklearn.naive_bayes import GaussianNB
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.neighbors import (NeighborhoodComponentsAnalysis, KNeighborsClassifier)
 import numpy as np
+from sklearn.pipeline import Pipeline
 import random
 import sys
 
@@ -75,9 +80,27 @@ def main():
     x_train, x_test, y_train, y_test = train_test_split(mfccs, labels, test_size=0.20, random_state=69)
 
     # Kernel types: ‘linear’, ‘poly’, ‘rbf’, ‘sigmoid’, ‘precomputed
-    svclassifier = SVC(kernel="linear")
+    #svclassifier = SVC(kernel="poly")
 
-    svclassifier.fit(x_train, y_train)
+    #svclassifier.fit(x_train, y_train)
+
+    #svclassifier.fit(x_train, y_train)
+    #predictions = svclassifier.predict(x_test)
+
+
+    # Gaussian Naive Bayes
+    #gnb = GaussianNB()
+    #gnb.fit(x_train, y_train)
+    #predictions = gnb.predict(x_test)
+
+    # KNN
+    nca = NeighborhoodComponentsAnalysis(random_state=42)
+    knn = KNeighborsClassifier(n_neighbors=3)
+    nca_pipe = Pipeline([('nca', nca), ('knn', knn)])
+    nca_pipe.fit(x_train, y_train)
+    print(nca_pipe.score(x_test, y_test))
+
+    #print(accuracy_score(y_test, predictions))
 
 
 main()
