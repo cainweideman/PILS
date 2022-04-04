@@ -1,3 +1,4 @@
+from sklearn.multiclass import OneVsRestClassifier
 from sklearn.svm import SVC
 import pickle
 from sklearn.model_selection import train_test_split
@@ -7,6 +8,7 @@ from sklearn.metrics import accuracy_score
 from sklearn.naive_bayes import GaussianNB
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.neighbors import (NeighborhoodComponentsAnalysis, KNeighborsClassifier)
+from sklearn.model_selection import cross_val_score
 import numpy as np
 from sklearn.pipeline import Pipeline
 import random
@@ -81,10 +83,12 @@ def main():
 
     # Kernel types: ‘linear’, ‘poly’, ‘rbf’, ‘sigmoid’, ‘precomputed
     #svclassifier = SVC(kernel="poly")
-
+    svm = OneVsRestClassifier(SVC(kernel='poly'), n_jobs=-1)
+    clf = svm.fit(x_train, y_train)
+    scores = cross_val_score(clf, x_test, y_test, cv=5)
+    print(scores)
     #svclassifier.fit(x_train, y_train)
 
-    #svclassifier.fit(x_train, y_train)
     #predictions = svclassifier.predict(x_test)
 
 
@@ -95,14 +99,14 @@ def main():
 
     # KNN
     #nca = NeighborhoodComponentsAnalysis(random_state=42)
-    knn = KNeighborsClassifier(n_neighbors=3)
+    #knn = KNeighborsClassifier(n_neighbors=1000, n_jobs=-1)
     #nca_pipe = Pipeline([('nca', nca), ('knn', knn)])
     #nca_pipe.fit(x_train, y_train)
-    knn.fit(x_train, y_train)
-    predictions = knn.predict(x_test)
+    #knn.fit(x_train, y_train)
+    #predictions = knn.predict(x_test)
     #print(nca_pipe.score(x_test, y_test))
 
-    print(accuracy_score(y_test, predictions))
+    #print(accuracy_score(y_test, predictions))
 
 
 main()
