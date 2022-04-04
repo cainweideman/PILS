@@ -94,13 +94,15 @@ def main():
     #predictions = gnb.predict(x_test)
 
     # KNN
-    nca = NeighborhoodComponentsAnalysis(random_state=42)
+    #nca = NeighborhoodComponentsAnalysis(random_state=42)
     knn = KNeighborsClassifier(n_neighbors=3)
-    nca_pipe = Pipeline([('nca', nca), ('knn', knn)])
-    nca_pipe.fit(x_train, y_train)
-    print(nca_pipe.score(x_test, y_test))
+    #nca_pipe = Pipeline([('nca', nca), ('knn', knn)])
+    #nca_pipe.fit(x_train, y_train)
+    knn.fit(x_train, y_train)
+    predictions = knn.predict(x_test)
+    #print(nca_pipe.score(x_test, y_test))
 
-    #print(accuracy_score(y_test, predictions))
+    print(accuracy_score(y_test, predictions))
 
 
 main()
