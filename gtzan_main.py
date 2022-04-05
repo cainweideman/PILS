@@ -4,6 +4,7 @@ from itertools import repeat
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import cross_val_score
+from sklearn.neighbors import KNeighborsClassifier
 
 
 def get_data():
@@ -30,13 +31,16 @@ def main():
     x_train, x_test, y_train, y_test = train_test_split(mfccs, labels, test_size=0.20, random_state=69)
 
     # Kernel types: ‘linear’, ‘poly’, ‘rbf’, ‘sigmoid’, ‘precomputed
-    svm = SVC(kernel="poly")
-    clf = svm.fit(x_train, y_train)
-    scores = cross_val_score(clf, x_test, y_test, cv=5)
-    predictions = svm.predict(x_test)
+    #svm = SVC(kernel="poly")
+    #svm.fit(x_train, y_train)
+    #scores = cross_val_score(svm, x_test, y_test, cv=5)
+    #predictions = svm.predict(x_test)
 
+    neigh = KNeighborsClassifier(n_neighbors=10)
+    neigh.fit(x_train, y_train)
+    predictions = neigh.predict(x_test)
     print(accuracy_score(y_test, predictions))
-    print(scores)
+    #print(scores)
 
 
 main()
