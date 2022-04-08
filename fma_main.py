@@ -24,7 +24,7 @@ def get_data():
     for i in mfcc_dict:
         mfccs.append(mfcc_dict[i])
 
-    # Padding with zeroes
+    # Padding with zeroes and summing/getting mean when wanted
     padded_mfcc = []
     temp_l = []
     for i in mfccs:
@@ -35,20 +35,26 @@ def get_data():
         #     i = np.pad(i, [(0, 0), (0, 2)], mode="constant")
 
         for ii in i:
+            # For regular MFCC's uncomment next line and comment other ones
+            # temp_l.append(ii)
+
+            # For mean of MFCC's
+            # temp_l.append(np.mean(ii))
+
+            # For sum of MFCC's
             temp_l.append(np.sum(ii))
             if len(temp_l) == 13:
                 padded_mfcc.append(temp_l)
                 temp_l = []
 
+    mfccs = padded_mfcc
     # Reshaping mfccs to format that the SVM classifier can recognise -
     # only necessary when using regular MFCC's, not for mean/sum
-    mfccs = padded_mfcc
-
     # nsamples, nx, ny = mfccs.shape
     # mfccs = mfccs.reshape((nsamples, nx * ny))
 
     # Genre dict
-    infile = open("genre_dict.pickle", 'rb')
+    infile = open("fma_genre_dict.pickle", 'rb')
     genre_dict = pickle.load(infile)
     infile.close()
     # Removing keys from genre dict that aren't in mfcc dict (useless keys)
