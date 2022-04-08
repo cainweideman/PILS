@@ -1,6 +1,14 @@
 # PILS
 MLP project
 
+Developed by:
+
+Cain Weideman
+
+Twan Heeres
+
+Thijs Brekhof
+
 # Code
 
 The following files have been developed for this project:
