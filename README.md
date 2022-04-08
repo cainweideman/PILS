@@ -43,6 +43,6 @@ Download GTZAN dataset from https://www.kaggle.com/datasets/andradaolteanu/gtzan
 
 run gtzan_convert.py to relocate the data from genres to wav-data, a cleaner and more easy to use directory.
 
-run wav_to_mfcc.py to convert wav data to MFCCs (default: Saved in wav_mfcc_dict.pickle)
+run wav_to_mfcc.py to convert wav data to MFCCs (default: Saved in gtzan_mfcc_dict.pickle)
 
-run gtzan_main.py
+run gtzan_main.py (default: set to use the MFFC's)
