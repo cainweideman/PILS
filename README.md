@@ -9,8 +9,6 @@ fma_get_genres.py - run this file in the same folder as tracks.csv to get fma_ge
 
 fma_convert.py - run this file to rewrite the data from fma_small to mp3-data, a cleaner and more easy to use data format.
 
-convert_to_wav.py - ?
-
 mp3_to_mfcc.py - run this file to convert the mp3 data in mp3-data to MFCC's, the output is a dictionary saved in a pickle file
 
 wav_to_mfcc.py - run this file to convert the wav data in wav-data to MFCC's, the output is a dictionary saved in a pickle file 
