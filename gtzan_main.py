@@ -1,42 +1,31 @@
 from matplotlib import pyplot as plt
 from sklearn.svm import SVC
-import pickle
-from itertools import repeat
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
-from sklearn.model_selection import cross_val_score
 from sklearn.neighbors import KNeighborsClassifier
-import numpy as np
-import collections
-from sklearn.multiclass import OneVsRestClassifier
 from sklearn.metrics import confusion_matrix
+from itertools import repeat
 import seaborn as sns
+import pickle
 
 
 def get_data():
-    # MFCC dict
-    infile = open("sum_gtzan_mfcc_dict.pickle", 'rb')
+    # Open the MFCC dict
+    infile = open("mean_gtzan_mfcc_dict.pickle", 'rb')
     mfcc_dict = pickle.load(infile)
     infile.close()
-    #for i in mfcc_dict:
-        #print(np.array(mfcc_dict[i]).shape)
-    #first = list(mfcc_dict.values())[0]
-    #print(first)
+
+    # Add the values of the dictionary to a list
     mfccs = []
     for i in mfcc_dict:
         mfccs.append(mfcc_dict[i])
 
-    #mfccs = np.array(mfccs)
-    #nsamples, nx, ny = mfccs.shape
-    #mfccs = mfccs.reshape((nsamples, nx * ny))
+    # Make the list of labels
     labels = ['blues', 'classical', 'country', 'disco', 'hiphop', 'jazz', 'metal', 'pop', 'reggae', 'rock']
     label_list = []
     for i in labels:
         label_list.extend(repeat(i, 100))
 
-    counter = collections.Counter(label_list)
-    #for k, v in dict(counter).items():
-        #print(k, v)
     return label_list, mfccs
 
 
@@ -48,15 +37,18 @@ def main():
     x_train, x_test, y_train, y_test = train_test_split(mfccs, labels, test_size=0.20, random_state=69)
 
     # Kernel types: ‘linear’, ‘poly’, ‘rbf’, ‘sigmoid’, ‘precomputed‘
-    svm = SVC(kernel="linear")
+    svm = SVC(kernel="poly")
     svm.fit(x_train, y_train)
     predictions = svm.predict(x_test)
 
-    #neigh = KNeighborsClassifier(n_neighbors=50)
+    # KNN classifier, uncomment these and comment the svm lines above to use it.
+    #neigh = KNeighborsClassifier(n_neighbors=10)
     #neigh.fit(x_train, y_train)
     #predictions = neigh.predict(x_test)
 
     print(accuracy_score(y_test, predictions))
+
+    # Make and plot a confusion matrix
     matrix = confusion_matrix(y_test, predictions)
     ax = sns.heatmap(matrix, annot=True, cmap='Blues')
 
@@ -64,13 +56,10 @@ def main():
     ax.set_xlabel('\nPredicted Genre')
     ax.set_ylabel('Actual Genre ')
 
-    ## Ticket labels - List must be in alphabetical order
     ax.xaxis.set_ticklabels(['blues', 'classical', 'country', 'disco', 'hiphop', 'jazz', 'metal', 'pop', 'reggae', 'rock'])
     ax.yaxis.set_ticklabels(['blues', 'classical', 'country', 'disco', 'hiphop', 'jazz', 'metal', 'pop', 'reggae', 'rock'])
 
-    ## Display the visualization of the Confusion Matrix.
     plt.show()
-    #print(scores)
 
 
 main()
