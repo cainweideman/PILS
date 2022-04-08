@@ -30,7 +30,7 @@ Download fma_metadata.zip and extract tracks.csv from this (required to get the 
 
 run fma_convert.py to rewrite the data from fma_small to mp3-data, a cleaner and more easy to use data format.
 
-run mp3_to_mfcc.py to convert mp3 data to MFCCs (default: saved in mfcc_dict.pickle)
+run mp3_to_mfcc.py to convert mp3 data to MFCCs (default: Saved in mfcc_dict.pickle) In case you cannot/don't want to run this file, the output is also available at https://drive.google.com/drive/u/1/folders/1ovOgYFLUD70kid8qOUmLmJ-TCU7U1oxm for people that have a RUG email account. (Not on github as the filesize is too large.) 
 
 run fma_get_genres.py to get the root genre for each of the songs (default: saved in fma_genre_dict.pickle)
 
