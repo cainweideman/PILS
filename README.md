@@ -11,9 +11,9 @@ fma_convert.py - run this file to rewrite the data from fma_small to mp3-data, a
 
 convert_to_wav.py - ?
 
-mp3_to_mfcc.py - run this file to convert the mp3 data in mp3-data to MFCC's, the output is a dictionary saved in a pickle file "mfcc_dict.pickle".
+mp3_to_mfcc.py - run this file to convert the mp3 data in mp3-data to MFCC's, the output is a dictionary saved in a pickle file
 
-wav_to_mfcc.py - ?
+wav_to_mfcc.py - run this file to convert the wav data in wav-data to MFCC's, the output is a dictionary saved in a pickle file 
 
 fma_main.py - main file to run the classifiers on the FMA dataset.
 
@@ -41,4 +41,8 @@ Clone this repository
 
 Download GTZAN dataset from https://www.kaggle.com/datasets/andradaolteanu/gtzan-dataset-music-genre-classification and extract in the folder you cloned this repository. 
 
-step 2
+step 2 = ????????
+
+run wav_to_mfcc.py to convert wav data to MFCCs (default: Saved in wav_mfcc_dict.pickle)
+
+run gtzan_main.py
