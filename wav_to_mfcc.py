@@ -35,7 +35,7 @@ def main():
 
         mfcc_dict[audio_file] = mfcc_list
 
-    with open('fma_mfcc_dict.pickle', 'wb') as f:
+    with open('fma_mean_dict.pickle', 'wb') as f:
         pickle.dump(mfcc_dict, f)
 
 
