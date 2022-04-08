@@ -11,7 +11,7 @@ import pickle
 
 def get_data():
     # Open the MFCC dict
-    infile = open("mean_gtzan_mfcc_dict.pickle", 'rb')
+    infile = open("gtzan_mean_dict.pickle", 'rb')
     mfcc_dict = pickle.load(infile)
     infile.close()
 

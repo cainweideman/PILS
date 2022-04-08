@@ -22,20 +22,20 @@ def main():
         mfcc_list = []
 
         for i in mfcc_feat:
-            # Use to make the mean dictionary
-            mean = np.mean(i)
-            mfcc_list.append(mean)
+            # Use to make the mean dictionary, comment lines 30,31 and 34 to use
+            #mean = np.mean(i)
+            #mfcc_list.append(mean)
 
-            # Use to make the sum dictionary
+            # Use to make the sum dictionary, comment lines 26, 27 and 34 to use
             #sum = np.sum(i)
             #mfcc_list.append(sum)
 
-            # Use to make the MFCC dictionary
-            #mfcc_list.append(i)
+            # Use to make the MFCC dictionary, comment lines 26, 27, 30 and 31 to use
+            mfcc_list.append(i)
 
         mfcc_dict[audio_file] = mfcc_list
 
-    with open('fma_mean_dict.pickle', 'wb') as f:
+    with open('gtzan_mfcc_dict.pickle', 'wb') as f:
         pickle.dump(mfcc_dict, f)
 
 
