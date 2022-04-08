@@ -1,18 +1,10 @@
-from sklearn.multiclass import OneVsRestClassifier
 from sklearn.svm import SVC
 import pickle
 from sklearn.model_selection import train_test_split
 import collections
-from sklearn import preprocessing
 from sklearn.metrics import accuracy_score
-from sklearn.naive_bayes import GaussianNB
-from sklearn.naive_bayes import MultinomialNB
-from sklearn.neighbors import (NeighborhoodComponentsAnalysis, KNeighborsClassifier)
-from sklearn.model_selection import cross_val_score
+from sklearn.neighbors import KNeighborsClassifier
 import numpy as np
-from sklearn.pipeline import Pipeline
-import random
-import sys
 
 
 def get_data():
@@ -22,26 +14,38 @@ def get_data():
     infile.close()
     mfcc_dict = collections.OrderedDict(sorted(mfcc_dict.items()))
     mfccs = []
-    issue_tracks = ["098565.mp3", "098567.mp3", "098569.mp3"]
+    issue_tracks = ["098565.mp3", "098567.mp3", "098569.mp3", "099134.mp3", "108925.mp3", "133297.mp3"]
     for track in issue_tracks:
-        mfcc_dict.pop(track)
+        try:
+            mfcc_dict.pop(track)
+        except KeyError:
+            pass
     # adding mfccs to list so the classifier can use them as input data
     for i in mfcc_dict:
         mfccs.append(mfcc_dict[i])
 
     # Padding with zeroes
     padded_mfcc = []
+    temp_l = []
     for i in mfccs:
-        if i.shape[1] == 1292:
-            i = np.pad(i, [(0, 0), (0, 1)], mode="constant")
-        elif i.shape[1] == 1291:
-            i = np.pad(i, [(0, 0), (0, 2)], mode="constant")
-        padded_mfcc.append(i)
-    # Reshaping mfccs to format that the SVM classifier can recognise
-    mfccs = np.array(padded_mfcc)
+        # If padding is required (when using the MFCC's themselves as input, uncomment the following if/elif clause
+        # if i.shape[1] == 1292:
+        #     i = np.pad(i, [(0, 0), (0, 1)], mode="constant")
+        # elif i.shape[1] == 1291:
+        #     i = np.pad(i, [(0, 0), (0, 2)], mode="constant")
 
-    nsamples, nx, ny = mfccs.shape
-    mfccs = mfccs.reshape((nsamples, nx * ny))
+        for ii in i:
+            temp_l.append(np.sum(ii))
+            if len(temp_l) == 13:
+                padded_mfcc.append(temp_l)
+                temp_l = []
+
+    # Reshaping mfccs to format that the SVM classifier can recognise -
+    # only necessary when using regular MFCC's, not for mean/sum
+    mfccs = padded_mfcc
+
+    # nsamples, nx, ny = mfccs.shape
+    # mfccs = mfccs.reshape((nsamples, nx * ny))
 
     # Genre dict
     infile = open("genre_dict.pickle", 'rb')
@@ -81,32 +85,19 @@ def main():
     # Splitting the data in train/test (80/20)
     x_train, x_test, y_train, y_test = train_test_split(mfccs, labels, test_size=0.20, random_state=69)
 
+    # SVM
     # Kernel types: ‘linear’, ‘poly’, ‘rbf’, ‘sigmoid’, ‘precomputed
-    #svclassifier = SVC(kernel="poly")
-    svm = OneVsRestClassifier(SVC(kernel='poly'), n_jobs=-1)
-    clf = svm.fit(x_train, y_train)
-    scores = cross_val_score(clf, x_test, y_test, cv=5)
-    print(scores)
-    #svclassifier.fit(x_train, y_train)
-
-    #predictions = svclassifier.predict(x_test)
-
-
-    # Gaussian Naive Bayes
-    #gnb = GaussianNB()
-    #gnb.fit(x_train, y_train)
-    #predictions = gnb.predict(x_test)
+    svm = SVC(kernel="linear")
+    svm.fit(x_train, y_train)
+    predictions = svm.predict(x_test)
 
     # KNN
-    #nca = NeighborhoodComponentsAnalysis(random_state=42)
-    #knn = KNeighborsClassifier(n_neighbors=1000, n_jobs=-1)
-    #nca_pipe = Pipeline([('nca', nca), ('knn', knn)])
-    #nca_pipe.fit(x_train, y_train)
-    #knn.fit(x_train, y_train)
-    #predictions = knn.predict(x_test)
-    #print(nca_pipe.score(x_test, y_test))
+    # neigh = KNeighborsClassifier(n_neighbors=10)
+    # neigh.fit(x_train, y_train)
+    # predictions = neigh.predict(x_test)
 
-    #print(accuracy_score(y_test, predictions))
+    # Printing accuracy
+    print(accuracy_score(y_test, predictions))
 
 
 main()
