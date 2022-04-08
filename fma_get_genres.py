@@ -37,7 +37,7 @@ def main():
             genre_dict[row["track_id"]] = row["genre_top"]
 
     # Writing the dict to a pickle file
-    with open('genre_dict.pickle', 'wb') as f:
+    with open('fma_genre_dict.pickle', 'wb') as f:
         pickle.dump(genre_dict, f)
 
 
