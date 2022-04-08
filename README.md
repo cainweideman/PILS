@@ -7,7 +7,9 @@ The following files have been developed for this project:
 
 fma_get_genres.py - run this file in the same folder as tracks.csv to get fma_genre_dict.pickle -> the dictionary with tracks as key and the corresponding genre as value.
 
-fma_convert.py - run this file to rewrite the data from fma_small to mp3-data, a cleaner and more easy to use data format.
+gtzan_convert.py - run this file to relocate the data from genres to wav-data, a cleaner and more easy to use directory.
+
+fma_convert.py - run this file to relocate the data from fma_small to mp3-data, a cleaner and more easy to use directory.
 
 mp3_to_mfcc.py - run this file to convert the mp3 data in mp3-data to MFCC's, the output is a dictionary saved in a pickle file
 
@@ -26,7 +28,7 @@ Download FMA dataset from https://github.com/mdeff/fma and extract in the folder
 
 Download fma_metadata.zip and extract tracks.csv from this (required to get the genres using fma_get_genres) to the same folder.
 
-run fma_convert.py to rewrite the data from fma_small to mp3-data, a cleaner and more easy to use data format.
+run fma_convert.py to relocate the data from fma_small to mp3-data, a cleaner and more easy to use directory.
 
 run mp3_to_mfcc.py to convert mp3 data to MFCCs (default: Saved in mfcc_dict.pickle) In case you cannot/don't want to run this file, the output is also available at https://drive.google.com/drive/u/1/folders/1ovOgYFLUD70kid8qOUmLmJ-TCU7U1oxm for people that have a RUG email account. (Not on github as the filesize is too large.) 
 
@@ -39,7 +41,7 @@ Clone this repository
 
 Download GTZAN dataset from https://www.kaggle.com/datasets/andradaolteanu/gtzan-dataset-music-genre-classification and extract in the folder you cloned this repository. 
 
-step 2 = ????????
+run gtzan_convert.py to relocate the data from genres to wav-data, a cleaner and more easy to use directory.
 
 run wav_to_mfcc.py to convert wav data to MFCCs (default: Saved in wav_mfcc_dict.pickle)
 
